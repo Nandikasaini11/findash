@@ -41,7 +41,7 @@ access control, and responsive design.
 ### Installation
 ```bash
 # Clone the repository
-git clone <repo-url>
+git clone https://github.com/Nandikasaini11/findash.git
 cd dashboard
 
 # Install dependencies
