@@ -75,19 +75,20 @@ npm run preview
 ---
 
 ## Project Structure
+```
 src/
 ├── components/
-│   ├── common/       # Card, Modal, Badge, EmptyState, Sidebar
-│   ├── dashboard/    # SummaryCard, BalanceTrendChart, SpendingPieChart
-│   ├── transactions/ # TransactionTable, Filters, Modal, ExportDropdown
-│   └── insights/     # InsightCard, IncomeExpenseChart, SmartObservations
-├── contexts/         # ThemeContext, RoleContext, TransactionContext, FilterContext
-├── hooks/            # useTheme, useRole, useTransactions, useFilters
-├── layouts/          # MainLayout
-├── pages/            # DashboardPage, TransactionsPage, InsightsPage
-├── data/             # mockTransactions.js
-└── utils/            # formatCurrency, dateUtils, insightCalculations
-
+│   ├── common/          # Card, Modal, Badge, EmptyState, Sidebar
+│   ├── dashboard/       # SummaryCard, BalanceTrendChart, SpendingPieChart
+│   ├── transactions/    # TransactionTable, Filters, Modal, ExportDropdown
+│   └── insights/        # InsightCard, IncomeExpenseChart, SmartObservations
+├── contexts/            # ThemeContext, RoleContext, TransactionContext, FilterContext
+├── hooks/               # useTheme, useRole, useTransactions, useFilters
+├── layouts/             # MainLayout
+├── pages/               # DashboardPage, TransactionsPage, InsightsPage
+├── data/                # mockTransactions.js
+└── utils/               # formatCurrency, dateUtils, insightCalculations
+```
 ---
 
 ## State Management
