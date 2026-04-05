@@ -23,6 +23,8 @@ function transactionReducer(state, action) {
       return state.map((t) =>
         t.id === action.payload.id ? action.payload : t
       );
+    case "DELETE_TRANSACTION":
+      return state.filter((t) => t.id !== action.payload);
     default:
       return state;
   }
@@ -48,9 +50,12 @@ export function TransactionProvider({ children }) {
   const editTransaction = (txn) =>
     dispatch({ type: "EDIT_TRANSACTION", payload: txn });
 
+  const deleteTransaction = (id) =>
+    dispatch({ type: "DELETE_TRANSACTION", payload: id });
+
   return (
     <TransactionContext.Provider
-      value={{ transactions, addTransaction, editTransaction }}
+      value={{ transactions, addTransaction, editTransaction, deleteTransaction }}
     >
       {children}
     </TransactionContext.Provider>

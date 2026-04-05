@@ -3,12 +3,12 @@ import { useRole } from "../../hooks/useRole";
 import { useFilteredTransactions } from "../../hooks/useFilteredTransactions";
 import TransactionRow from "./TransactionRow";
 import EmptyState from "../common/EmptyState";
+import Card from "../common/Card";
 
 export default function TransactionTable({ onEdit }) {
   const { search, typeFilter, categoryFilter, clearFilters } = useFilters();
   const { role } = useRole();
   const filtered = useFilteredTransactions();
-
   const hasActiveFilters = search || typeFilter !== "all" || categoryFilter !== "all";
 
   if (filtered.length === 0) {
@@ -23,26 +23,26 @@ export default function TransactionTable({ onEdit }) {
   }
 
   return (
-    <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
-      <table className="w-full">
-        <thead>
-          <tr className="border-b border-gray-200 dark:border-gray-700">
-            <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
-            <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Description</th>
-            <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Category</th>
-            <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden sm:table-cell">Type</th>
-            <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Amount</th>
-            {role === "admin" && (
-              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-12"></th>
-            )}
-          </tr>
-        </thead>
-        <tbody>
-          {filtered.map((t) => (
-            <TransactionRow key={t.id} transaction={t} onEdit={onEdit} />
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Card className="!p-0 border-gray-100 dark:border-[#23242C] overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="border-b border-gray-100 dark:border-[#23242C] bg-gray-50 dark:bg-[#181921]">
+              <th className="px-5 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+              <th className="px-5 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+              <th className="px-5 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+              <th className="px-5 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">Type</th>
+              <th className="px-5 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-right">Amount</th>
+              {role === "admin" && <th className="px-5 py-3 w-16"></th>}
+            </tr>
+          </thead>
+          <tbody className="bg-white dark:bg-[#121319] divide-y divide-gray-100 dark:divide-[#23242C]">
+            {filtered.map((t) => (
+              <TransactionRow key={t.id} transaction={t} onEdit={onEdit} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Card>
   );
 }

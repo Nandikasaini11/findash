@@ -62,6 +62,53 @@ export function getMonthOverMonth(transactions) {
   };
 }
 
+export function getNetSavingsThisMonth(transactions) {
+  const now = new Date();
+  const currentKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+  const monthTxns = transactions.filter((t) => getMonthKey(t.date) === currentKey);
+  const income = monthTxns.filter((t) => t.type === "income").reduce((s, t) => s + t.amount, 0);
+  const expense = monthTxns.filter((t) => t.type === "expense").reduce((s, t) => s + t.amount, 0);
+  // If no data for current month, use the latest month with data
+  if (monthTxns.length === 0) {
+    const monthlyData = getMonthlyData(transactions);
+    if (monthlyData.length === 0) return { savings: 0, label: "N/A" };
+    const latest = monthlyData[monthlyData.length - 1];
+    return { savings: latest.income - latest.expense, label: latest.label };
+  }
+  const label = new Date(currentKey + "-01T00:00:00").toLocaleDateString("en-US", { month: "short", year: "2-digit" });
+  return { savings: income - expense, label };
+}
+
+export function getMostActiveMonth(transactions) {
+  const counts = {};
+  transactions.forEach((t) => {
+    const key = getMonthKey(t.date);
+    counts[key] = (counts[key] || 0) + 1;
+  });
+  let maxKey = null;
+  let maxCount = 0;
+  Object.entries(counts).forEach(([key, count]) => {
+    if (count > maxCount) { maxKey = key; maxCount = count; }
+  });
+  if (!maxKey) return { label: "N/A", count: 0 };
+  const label = new Date(maxKey + "-01T00:00:00").toLocaleDateString("en-US", { month: "short", year: "2-digit" });
+  return { label, count: maxCount };
+}
+
+export function getAvgMonthlyIncome(transactions) {
+  const monthlyData = getMonthlyData(transactions);
+  if (monthlyData.length === 0) return 0;
+  const total = monthlyData.reduce((s, m) => s + m.income, 0);
+  return total / monthlyData.length;
+}
+
+export function getAvgMonthlyExpense(transactions) {
+  const monthlyData = getMonthlyData(transactions);
+  if (monthlyData.length === 0) return 0;
+  const total = monthlyData.reduce((s, m) => s + m.expense, 0);
+  return total / monthlyData.length;
+}
+
 export function getSmartObservations(transactions) {
   const observations = [];
   const expenses = transactions.filter((t) => t.type === "expense");

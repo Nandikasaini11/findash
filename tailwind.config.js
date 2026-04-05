@@ -5,8 +5,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        accent: "#22c55e",
-        "accent-dark": "#16a34a",
+        accent: "#22D3EE",
+        "accent-dark": "#06B6D4",
+      },
+      fontFamily: {
+        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
       },
     },
   },
